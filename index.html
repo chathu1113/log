@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tailwind Firebase Auth</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+</head>
+<body class="bg-gray-100 font-body">
+  <div class="flex justify-center items-center h-screen">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
+      <div class="mb-4">
+        <h1 class="text-2xl font-bold text-gray-800">Login</h1>
+      </div>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-gray-700 font-bold mb-2" for="email">
+            Email
+          </label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-bold mb-2" for="password">
+            Password
+          </label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password" required>
+        </div>
+        <div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            Sign In
+          </button>
+        </div>
+      </form>
+      <div id="errorMessage" class="text-red-500 mt-2"></div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+      // Your Firebase configuration goes here
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    // Get references to form elements
+    const loginForm = document.getElementById('loginForm');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Handle login form submission
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+        // Redirect the user to another website
+        window.location.href = 'https://example.com'; // Replace with the desired URL
+      } catch (error) {
+        errorMessage.textContent = error.message;
+      }
+    });
+  </script>
+</body>
+</html>
